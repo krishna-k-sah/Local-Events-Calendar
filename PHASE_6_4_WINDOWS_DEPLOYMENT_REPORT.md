@@ -103,3 +103,4 @@ Remove-Item Env:\DATABASE_URL
 3. **No Unnecessary Global Installs:** Utilizing `npx --yes <package>` avoids cluttering the Windows global registry or modifying system environment variables.
 
 **Classification:** **WINDOWS DEPLOYMENT TOOLING VERIFIED**
+

@@ -9,7 +9,7 @@ import { startReminderScheduler, stopReminderScheduler } from './services/remind
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 EventHub Backend Server listening on port ${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 Base API URL: http://localhost:${PORT}/api`);

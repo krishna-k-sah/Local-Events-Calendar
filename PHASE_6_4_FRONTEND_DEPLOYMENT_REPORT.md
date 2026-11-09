@@ -98,3 +98,4 @@ Per strict frontend security rules:
 - No database credentials, JWT secrets, or ticket secrets are included in client builds.
 
 **Classification:** **FRONTEND DEPLOYMENT SPECIFICATION VERIFIED**
+

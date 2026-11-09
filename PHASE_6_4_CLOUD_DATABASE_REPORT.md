@@ -70,3 +70,4 @@ npx prisma migrate deploy --schema=prisma/schema.postgresql.prisma
 14. `_prisma_migrations` — Internal Prisma migration checksum journal.
 
 **Classification:** **CLOUD DATABASE CONFIGURATION READY**
+
