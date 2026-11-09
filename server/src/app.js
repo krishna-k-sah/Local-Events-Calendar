@@ -39,14 +39,17 @@ app.use(helmet({
 // CORS configuration supporting single origin or comma-separated lists
 const configuredOrigins = (process.env.CLIENT_URL || '')
   .split(',')
-  .map((origin) => origin.trim())
+  .map((origin) => origin.trim().replace(/\/+$/, ''))
   .filter(Boolean);
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://127.0.0.1:5173',
-  ...configuredOrigins,
-];
+const isProduction = process.env.NODE_ENV === 'production';
+const allowedOrigins = isProduction
+  ? configuredOrigins
+  : [
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+      ...configuredOrigins,
+    ];
 
 app.use(cors({
   origin: (origin, callback) => {

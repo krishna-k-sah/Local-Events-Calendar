@@ -15,18 +15,28 @@ export function validateEnvironment() {
 
   // 2. Strict checks for production and staging
   if (env === 'production' || env === 'staging') {
-    const DEFAULT_DEV_SECRET = 'eventhub-super-secret-jwt-key-2026-production';
+    const COMPROMISED_SECRETS = [
+      'eventhub-super-secret-jwt-key-2026-production',
+      'c489ab71e82d338f90bb353cfc87f5812fa9084920612ce2e56d78d9101f3014c44a2b6f',
+    ];
     
     if (!process.env.JWT_SECRET) {
       errors.push('JWT_SECRET must be defined in production/staging environments.');
-    } else if (process.env.JWT_SECRET === DEFAULT_DEV_SECRET) {
-      errors.push('JWT_SECRET cannot use the default development secret in production/staging.');
+    } else if (COMPROMISED_SECRETS.includes(process.env.JWT_SECRET)) {
+      errors.push('JWT_SECRET cannot use a default, sample, or compromised secret in production/staging.');
     } else if (process.env.JWT_SECRET.length < 32) {
       errors.push('JWT_SECRET must be at least 32 characters long for cryptographic security.');
     }
 
     if (!process.env.CLIENT_URL) {
       warnings.push('CLIENT_URL is not set. Cross-origin requests from the web frontend will be blocked by CORS.');
+    } else if (env === 'production') {
+      const origins = process.env.CLIENT_URL.split(',').map((s) => s.trim()).filter(Boolean);
+      for (const origin of origins) {
+        if (!origin.startsWith('https://') && !origin.includes('localhost') && !origin.includes('127.0.0.1')) {
+          warnings.push(`Production CLIENT_URL origin "${origin}" should use secure HTTPS protocol.`);
+        }
+      }
     }
   }
 
