@@ -49,3 +49,4 @@ To ensure operational visibility without confusing simple log files with externa
 - **Alert Payloads:** Contain failing endpoint, HTTP status code, response time, and timestamp.
 
 **Classification:** **OPERATIONS & DISASTER RECOVERY CERTIFIED**
+

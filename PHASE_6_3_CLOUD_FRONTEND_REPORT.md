@@ -83,3 +83,4 @@ In single-page applications, direct navigation to deep nested paths (e.g. `/even
 - In production, setting `VITE_API_BASE_URL=https://eventhub-backend.railway.app/api` cleanly directs all asynchronous Axios requests to the cloud backend.
 
 **Classification:** **FRONTEND BUILD & SPA DEPLOYMENT CONFIGURATION CERTIFIED**
+

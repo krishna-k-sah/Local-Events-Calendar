@@ -39,3 +39,4 @@ Tickets are cryptographically signed using a dedicated secret (`TICKET_SECRET`):
 - **Duplicate Check-In Protection:** Checked-in status is committed atomically in a serializable transaction. Repeated scans return HTTP 409 Conflict.
 
 **Classification:** **SECURITY CONTROLS CERTIFIED**
+

@@ -80,3 +80,4 @@ npx prisma migrate deploy --schema=prisma/schema.postgresql.prisma
 4. **`prisma db push` Prohibition:** `db push` is permanently disabled in the production deployment pipeline.
 
 **Classification:** **CLOUD DATABASE CONFIGURATION CERTIFIED**
+

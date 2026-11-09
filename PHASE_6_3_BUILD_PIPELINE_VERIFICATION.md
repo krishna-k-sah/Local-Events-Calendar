@@ -104,3 +104,4 @@ PS> docker build -t eventhub-backend:test ./server
 4. Migrations are completely absent from the image build steps, ensuring zero risk of premature or failed builds due to database unavailability.
 
 **Classification:** **VERIFIED & DECOUPLED**
+

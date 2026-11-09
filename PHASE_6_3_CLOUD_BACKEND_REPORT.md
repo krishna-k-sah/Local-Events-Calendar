@@ -80,3 +80,4 @@ When authorized on Railway:
   - `CORS_ORIGIN`: `https://eventhub.vercel.app`
 
 **Classification:** **BACKEND CONTAINER VERIFIED & HEALTH CERTIFIED**
+
