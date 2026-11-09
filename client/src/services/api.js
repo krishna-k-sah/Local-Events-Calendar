@@ -1,0 +1,39 @@
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Request interceptor to automatically attach JWT token from localStorage
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('eventhub_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor to catch unauthorized or session expirations
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Clear expired credentials if any
+      const currentPath = window.location.pathname;
+      if (!['/login', '/register', '/', '/discover', '/calendar'].includes(currentPath)) {
+        localStorage.removeItem('eventhub_token');
+        localStorage.removeItem('eventhub_user');
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default api;
+

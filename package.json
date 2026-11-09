@@ -1,0 +1,28 @@
+{
+  "name": "local-event-calendar-management-system",
+  "version": "1.0.0",
+  "description": "Production-ready Local Event Calendar Management System with Node/Express/Prisma backend and React/Vite/Tailwind frontend.",
+  "scripts": {
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "test": "npm test --prefix server",
+    "test:server": "npm test --prefix server",
+    "build": "npm run build --prefix client",
+    "build:client": "npm run build --prefix client",
+    "prisma:seed": "npm run prisma:seed --prefix server",
+    "prisma:studio": "npm run prisma:studio --prefix server"
+  },
+  "keywords": [
+    "calendar",
+    "events",
+    "react",
+    "express",
+    "prisma",
+    "full-calendar"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.65.0"
+  }
+}
