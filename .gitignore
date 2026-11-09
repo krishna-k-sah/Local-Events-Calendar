@@ -15,9 +15,13 @@ server/uploads/
 *.tar.gz
 .backup/
 
-# Database Local Engines
+# Database Local Engines & Artifacts
+*.db
+*.db-journal
 server/dev.db
 server/dev.db-journal
+server/prisma/*.db
+server/prisma/*.db-journal
 
 # Secrets & Environment Files (Never commit real credentials)
 .env
