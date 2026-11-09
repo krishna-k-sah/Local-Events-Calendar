@@ -156,8 +156,8 @@ Built with **React 18, Vite, Tailwind CSS, Node.js (Express), and Prisma ORM on 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/krishna-k-sah/Local-Events-Calendar-.git
-cd Local-Events-Calendar-
+git clone https://github.com/krishna-k-sah/Local-Events-Calendar.git
+cd Local-Events-Calendar
 ```
 
 ### 2. Backend Setup

@@ -65,3 +65,4 @@ To provision the live database:
 ## 5. Audit Conclusion
 
 Database migrations are certified ready. Actual cloud provisioning status: **BLOCKED (CLOUD AUTHORIZATION PENDING)**.
+

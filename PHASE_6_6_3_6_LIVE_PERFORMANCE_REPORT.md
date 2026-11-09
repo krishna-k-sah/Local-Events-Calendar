@@ -44,3 +44,4 @@ Once live cloud endpoints are deployed, the following benchmarking protocol will
 ## 4. Audit Conclusion
 
 The application demonstrates high local throughput and sub-15ms response times. Live cloud latency status: **NOT TESTED (PENDING CLOUD DEPLOYMENT)**.
+
