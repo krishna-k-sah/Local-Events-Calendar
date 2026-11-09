@@ -1,33 +1,50 @@
 import { z } from 'zod';
 
+const emptyToNull = (val) => (typeof val === 'string' && val.trim() === '' ? null : val);
+
 export const createEventSchema = z
   .object({
-    title: z.string().min(3, 'Title must be at least 3 characters').max(200, 'Title cannot exceed 200 characters'),
-    description: z.string().min(10, 'Description must be at least 10 characters'),
-    categoryId: z.string().min(1, 'Category is required'),
+    title: z.string().trim().min(3, 'Title must be at least 3 characters').max(200, 'Title cannot exceed 200 characters'),
+    description: z.string().trim().min(10, 'Description must be at least 10 characters'),
+    categoryId: z.string().trim().min(1, 'Category is required'),
     startDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
       message: 'Valid start date is required',
     }),
-    endDate: z.string().optional().nullable().refine((val) => !val || !isNaN(Date.parse(val)), {
-      message: 'Invalid end date',
-    }),
-    registrationDeadline: z.string().optional().nullable().refine((val) => !val || !isNaN(Date.parse(val)), {
-      message: 'Invalid registration deadline date',
-    }),
-    venueName: z.string().min(2, 'Venue name is required'),
-    address: z.string().min(2, 'Address is required'),
-    city: z.string().min(2, 'City is required'),
+    endDate: z.preprocess(
+      emptyToNull,
+      z.string().optional().nullable().refine((val) => !val || !isNaN(Date.parse(val)), {
+        message: 'Invalid end date',
+      })
+    ),
+    registrationDeadline: z.preprocess(
+      emptyToNull,
+      z.string().optional().nullable().refine((val) => !val || !isNaN(Date.parse(val)), {
+        message: 'Invalid registration deadline date',
+      })
+    ),
+    venueName: z.string().trim().min(2, 'Venue name is required'),
+    address: z.string().trim().min(2, 'Address is required'),
+    city: z.string().trim().min(2, 'City is required'),
     maxCapacity: z.coerce.number().int('Capacity must be an integer').min(1, 'Capacity must be at least 1').default(100),
     isFree: z.coerce.boolean().default(true),
     price: z.coerce.number().min(0, 'Price cannot be negative').default(0),
-    contactEmail: z.string().email('Invalid contact email').optional().nullable(),
-    contactPhone: z.string().optional().nullable(),
-    posterImage: z.string().optional().nullable(),
+    contactEmail: z.preprocess(
+      emptyToNull,
+      z.string().email('Invalid contact email').optional().nullable()
+    ),
+    contactPhone: z.preprocess(
+      emptyToNull,
+      z.string().optional().nullable()
+    ),
+    posterImage: z.preprocess(
+      emptyToNull,
+      z.string().optional().nullable()
+    ),
   })
   .refine(
     (data) => {
-      // Validate start date is not in the past (allowing 5 min grace period for clock drift)
-      const now = new Date(Date.now() - 5 * 60 * 1000);
+      // Validate start date is not in the past (allowing 10 min grace period for clock drift / user entry)
+      const now = new Date(Date.now() - 10 * 60 * 1000);
       return new Date(data.startDate) >= now;
     },
     {
@@ -70,21 +87,36 @@ export const createEventSchema = z
 
 export const updateEventSchema = z
   .object({
-    title: z.string().min(3).max(200).optional(),
-    description: z.string().min(10).optional(),
-    categoryId: z.string().min(1).optional(),
+    title: z.string().trim().min(3).max(200).optional(),
+    description: z.string().trim().min(10).optional(),
+    categoryId: z.string().trim().min(1).optional(),
     startDate: z.string().refine((val) => !val || !isNaN(Date.parse(val)), { message: 'Invalid start date' }).optional(),
-    endDate: z.string().optional().nullable().refine((val) => !val || !isNaN(Date.parse(val)), { message: 'Invalid end date' }),
-    registrationDeadline: z.string().optional().nullable().refine((val) => !val || !isNaN(Date.parse(val)), { message: 'Invalid deadline' }),
-    venueName: z.string().min(2).optional(),
-    address: z.string().min(2).optional(),
-    city: z.string().min(2).optional(),
+    endDate: z.preprocess(
+      emptyToNull,
+      z.string().optional().nullable().refine((val) => !val || !isNaN(Date.parse(val)), { message: 'Invalid end date' })
+    ),
+    registrationDeadline: z.preprocess(
+      emptyToNull,
+      z.string().optional().nullable().refine((val) => !val || !isNaN(Date.parse(val)), { message: 'Invalid deadline' })
+    ),
+    venueName: z.string().trim().min(2).optional(),
+    address: z.string().trim().min(2).optional(),
+    city: z.string().trim().min(2).optional(),
     maxCapacity: z.coerce.number().int().min(1).optional(),
     isFree: z.coerce.boolean().optional(),
     price: z.coerce.number().min(0).optional(),
-    contactEmail: z.string().email().optional().nullable(),
-    contactPhone: z.string().optional().nullable(),
-    posterImage: z.string().optional().nullable(),
+    contactEmail: z.preprocess(
+      emptyToNull,
+      z.string().email('Invalid contact email').optional().nullable()
+    ),
+    contactPhone: z.preprocess(
+      emptyToNull,
+      z.string().optional().nullable()
+    ),
+    posterImage: z.preprocess(
+      emptyToNull,
+      z.string().optional().nullable()
+    ),
     status: z.enum(['DRAFT', 'PENDING', 'APPROVED', 'PUBLISHED', 'REJECTED', 'ONGOING', 'COMPLETED', 'CANCELLED']).optional(),
   })
   .refine(

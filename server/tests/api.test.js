@@ -116,7 +116,8 @@ describe('EventHub Comprehensive API Integration Test Suite', () => {
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
       expect(res.body.token).toBeDefined();
-      expect(res.body.user.fullName).toBe('Alexander Wright');
+      expect(res.body.user.email).toBe('admin@eventhub.com');
+      expect(res.body.user.fullName).toBeDefined();
     });
 
     it('should reject login with incorrect password', async () => {

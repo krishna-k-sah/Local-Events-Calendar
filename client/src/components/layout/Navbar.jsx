@@ -32,7 +32,7 @@ export const Navbar = ({ onToggleSidebar }) => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <nav className="w-full bg-white" aria-label="Top Brand Navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Left: Brand Logo & Hamburger */}
@@ -364,7 +364,7 @@ export const Navbar = ({ onToggleSidebar }) => {
           )}
         </div>
       )}
-    </header>
+    </nav>
   );
 };
 

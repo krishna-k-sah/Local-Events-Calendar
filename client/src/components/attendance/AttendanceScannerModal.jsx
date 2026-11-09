@@ -120,6 +120,7 @@ export const AttendanceScannerModal = ({ eventId, eventTitle, isOpen, onClose })
           </div>
           <button
             onClick={onClose}
+            aria-label="Close scanner modal"
             className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition"
           >
             <X className="w-5 h-5" />

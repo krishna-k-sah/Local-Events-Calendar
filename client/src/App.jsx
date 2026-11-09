@@ -57,19 +57,19 @@ export function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans">
-      {/* Top Interactive Role Switcher Banner */}
-      <RoleSwitcher />
+      {/* Top Unified Header Container (Role Switcher + Main Navbar) */}
+      <header className="sticky top-0 z-30 bg-white border-b border-slate-200/80 shadow-sm flex flex-col">
+        <RoleSwitcher />
+        <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      </header>
 
-      {/* Main Navbar */}
-      <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-
-      {/* App Body with optional Sidebar */}
-      <div className="flex-1 flex">
+      {/* App Shell Body with in-flow Desktop Sidebar & Off-Canvas Mobile Drawer */}
+      <div className="flex-1 flex min-w-0">
         {isDashboardView && !isPublicStandalone && (
           <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         )}
 
-        <main className={`flex-1 transition-all duration-300 ${isDashboardView && !isPublicStandalone ? 'lg:pl-64' : ''}`}>
+        <main className="flex-1 min-w-0 flex flex-col">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Public Discovery & Core */}

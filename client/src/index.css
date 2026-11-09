@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --role-bar-height: 36px;
+    --navbar-height: 64px;
+    --header-total-height: 100px;
+    --sidebar-width: 16rem;
+    --z-dropdown: 35;
+    --z-sticky-header: 30;
+    --z-sidebar-desktop: 20;
+    --z-mobile-drawer: 50;
+  }
+
   html {
     scroll-behavior: smooth;
   }

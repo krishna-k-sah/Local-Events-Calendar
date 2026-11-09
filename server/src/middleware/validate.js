@@ -9,9 +9,12 @@ export const validateBody = (schema) => {
           field: err.path.join('.'),
           message: err.message,
         }));
+        const summary = validationErrors
+          .map((e) => (e.field ? `${e.field}: ${e.message}` : e.message))
+          .join(', ');
         return res.status(400).json({
           success: false,
-          message: 'Validation failed for request payload.',
+          message: `Validation failed for request payload. ${summary}`,
           errors: validationErrors,
         });
       }
@@ -41,4 +44,3 @@ export const validateQuery = (schema) => {
     }
   };
 };
-

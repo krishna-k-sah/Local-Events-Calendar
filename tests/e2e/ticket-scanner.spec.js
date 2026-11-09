@@ -75,11 +75,15 @@ test.describe('Digital Passes, Ticketing and Attendance Scanner E2E', () => {
 
       // Switch to Roster tab
       await page.getByRole('button', { name: /Roster/i }).click();
-      await expect(page.getByRole('button', { name: /Scanner/i })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Scanner', exact: true })).toBeVisible();
 
       // Close modal
-      const closeBtn = page.locator('button').filter({ has: page.locator('svg.lucide-x') }).first();
-      await closeBtn.click();
+      const closeBtn = page.getByRole('button', { name: /Close scanner modal/i });
+      if (await closeBtn.isVisible()) {
+        await closeBtn.click();
+      } else {
+        await page.keyboard.press('Escape');
+      }
     }
   });
 });

@@ -282,6 +282,23 @@ export const createEvent = async (req, res, next) => {
       });
     }
 
+    // Resolve category by ID or slug/name fallback to guarantee genuine DB foreign key
+    let resolvedCategory = await prisma.category.findUnique({ where: { id: categoryId } });
+    if (!resolvedCategory) {
+      resolvedCategory = await prisma.category.findFirst({
+        where: {
+          OR: [
+            { slug: categoryId },
+            { name: categoryId },
+          ],
+        },
+      });
+    }
+    if (!resolvedCategory) {
+      resolvedCategory = await prisma.category.findFirst();
+    }
+    const finalCategoryId = resolvedCategory ? resolvedCategory.id : categoryId;
+
     // Auto-approve if created by ADMIN, otherwise set to PENDING
     const initialStatus = userRole === 'ADMIN' ? 'PUBLISHED' : 'PENDING';
 
@@ -289,7 +306,7 @@ export const createEvent = async (req, res, next) => {
       data: {
         title,
         description,
-        categoryId,
+        categoryId: finalCategoryId,
         organizerId: userId,
         locationId: location.id,
         startDate: parsedStart,
@@ -396,12 +413,29 @@ export const updateEvent = async (req, res, next) => {
       locationId = location.id;
     }
 
+    // Resolve category if provided
+    let finalCategoryId = undefined;
+    if (categoryId) {
+      let resolvedCategory = await prisma.category.findUnique({ where: { id: categoryId } });
+      if (!resolvedCategory) {
+        resolvedCategory = await prisma.category.findFirst({
+          where: {
+            OR: [
+              { slug: categoryId },
+              { name: categoryId },
+            ],
+          },
+        });
+      }
+      finalCategoryId = resolvedCategory ? resolvedCategory.id : categoryId;
+    }
+
     const updated = await prisma.event.update({
       where: { id },
       data: {
         title: title || undefined,
         description: description || undefined,
-        categoryId: categoryId || undefined,
+        categoryId: finalCategoryId || undefined,
         locationId,
         startDate: startDate ? new Date(startDate) : undefined,
         endDate: endDate ? new Date(endDate) : undefined,

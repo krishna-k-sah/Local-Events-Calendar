@@ -106,6 +106,19 @@ app.use('/uploads', express.static(path.resolve('uploads')));
 // API Sub-Routers
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventRoutes);
+
+// Public categories endpoint to serve real database categories across the application
+app.get('/api/categories', async (req, res, next) => {
+  try {
+    const prismaModule = await import('./config/db.js');
+    const categories = await prismaModule.default.category.findMany({
+      orderBy: { name: 'asc' },
+    });
+    res.status(200).json({ success: true, data: categories });
+  } catch (error) {
+    next(error);
+  }
+});
 app.use('/api/registrations', registrationRoutes);
 app.use('/api/users/registrations', requireAuth, getUserRegistrations);
 app.use('/api/favorites', favoriteRoutes);

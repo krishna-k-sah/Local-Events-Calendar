@@ -1,6 +1,11 @@
 import api from './api';
 
 export const eventService = {
+  async getCategories() {
+    const res = await api.get('/categories');
+    return res.data;
+  },
+
   async getEvents(params = {}) {
     const res = await api.get('/events', { params });
     return res.data;

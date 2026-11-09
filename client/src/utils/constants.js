@@ -14,14 +14,14 @@ export const EVENT_STATUS = {
 };
 
 export const CATEGORIES = [
-  { id: 'cat-1', name: 'Technology & AI', slug: 'tech-ai', color: '#6366f1', icon: 'Cpu' },
-  { id: 'cat-2', name: 'Music & Concerts', slug: 'music-concerts', color: '#ec4899', icon: 'Music' },
-  { id: 'cat-3', name: 'Business & Networking', slug: 'business-networking', color: '#0ea5e9', icon: 'Briefcase' },
-  { id: 'cat-4', name: 'Arts & Culture', slug: 'arts-culture', color: '#f59e0b', icon: 'Palette' },
-  { id: 'cat-5', name: 'Sports & Fitness', slug: 'sports-fitness', color: '#10b981', icon: 'Activity' },
-  { id: 'cat-6', name: 'Food & Culinary', slug: 'food-culinary', color: '#ef4444', icon: 'Utensils' },
-  { id: 'cat-7', name: 'Community & Charity', slug: 'community-charity', color: '#8b5cf6', icon: 'Heart' },
-  { id: 'cat-8', name: 'Workshops & Education', slug: 'workshops-education', color: '#14b8a6', icon: 'BookOpen' },
+  { id: 'cmw8zvvuv000vhfpgmkclm77p', name: 'Technology & AI', slug: 'tech-ai', color: '#6366f1', icon: 'Cpu' },
+  { id: 'cmw8zvvuy000whfpg5cvf4ne7', name: 'Music & Concerts', slug: 'music-concerts', color: '#ec4899', icon: 'Music' },
+  { id: 'cmw8zvvv1000xhfpgi4rbeiya', name: 'Business & Networking', slug: 'business-networking', color: '#0ea5e9', icon: 'Briefcase' },
+  { id: 'cmw8zvvv4000yhfpggharfaqh', name: 'Arts & Culture', slug: 'arts-culture', color: '#f59e0b', icon: 'Palette' },
+  { id: 'cmw8zvvv6000zhfpgjg1lq2u4', name: 'Sports & Fitness', slug: 'sports-fitness', color: '#10b981', icon: 'Activity' },
+  { id: 'cmw8zvvv80010hfpgnsxrud7i', name: 'Food & Culinary', slug: 'food-culinary', color: '#ef4444', icon: 'Utensils' },
+  { id: 'cmw8zvvvb0011hfpgsipjqxck', name: 'Community & Charity', slug: 'community-charity', color: '#8b5cf6', icon: 'Heart' },
+  { id: 'cmw8zvvvd0012hfpg25cj7wgk', name: 'Workshops & Education', slug: 'workshops-education', color: '#14b8a6', icon: 'BookOpen' },
 ];
 
 export const STATUS_COLORS = {

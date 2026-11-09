@@ -16,6 +16,7 @@ export const CreateEventPage = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [categoriesList, setCategoriesList] = useState(CATEGORIES);
   const [categoryId, setCategoryId] = useState(CATEGORIES[0].id);
   const [startDate, setStartDate] = useState('');
   const [startTime, setStartTime] = useState('09:00');
@@ -35,11 +36,22 @@ export const CreateEventPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  React.useEffect(() => {
+    let isMounted = true;
+    eventService.getCategories().then((res) => {
+      if (isMounted && res.success && res.data?.length > 0) {
+        setCategoriesList(res.data);
+        setCategoryId(res.data[0].id);
+      }
+    }).catch(() => {});
+    return () => { isMounted = false; };
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (!title || !description || !startDate || !venueName || !address) {
+    if (!title.trim() || !description.trim() || !startDate || !venueName.trim() || !address.trim()) {
       setError('Please provide all required fields.');
       return;
     }
@@ -51,21 +63,21 @@ export const CreateEventPage = () => {
       const regDeadlineDateTime = registrationDeadline ? new Date(`${registrationDeadline}T23:59:59`).toISOString() : null;
 
       const res = await eventService.createEvent({
-        title,
-        description,
+        title: title.trim(),
+        description: description.trim(),
         categoryId,
         startDate: startDateTime,
         endDate: endDateTime,
         registrationDeadline: regDeadlineDateTime,
-        venueName,
-        address,
-        city,
-        maxCapacity: parseInt(maxCapacity, 10),
-        isFree,
+        venueName: venueName.trim(),
+        address: address.trim(),
+        city: city.trim(),
+        maxCapacity: parseInt(maxCapacity, 10) || 100,
+        isFree: Boolean(isFree),
         price: isFree ? 0 : parseFloat(price) || 0,
-        contactEmail,
-        contactPhone,
-        posterImage: posterPreview,
+        contactEmail: contactEmail?.trim() || null,
+        contactPhone: contactPhone?.trim() || null,
+        posterImage: posterPreview?.trim() || null,
       });
 
       if (res.success) {
@@ -133,7 +145,7 @@ export const CreateEventPage = () => {
               required
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
-              options={CATEGORIES.map((c) => ({ label: c.name, value: c.id }))}
+              options={categoriesList.map((c) => ({ label: c.name, value: c.id }))}
             />
 
             <div>

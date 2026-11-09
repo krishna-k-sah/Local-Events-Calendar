@@ -15,6 +15,7 @@ export const EditEventPage = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [categoriesList, setCategoriesList] = useState(CATEGORIES);
   const [categoryId, setCategoryId] = useState(CATEGORIES[0].id);
   const [startDate, setStartDate] = useState('');
   const [venueName, setVenueName] = useState('');
@@ -28,6 +29,14 @@ export const EditEventPage = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    eventService.getCategories().then((res) => {
+      if (res.success && res.data?.length > 0) {
+        setCategoriesList(res.data);
+      }
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     const loadEvent = async () => {
@@ -64,17 +73,17 @@ export const EditEventPage = () => {
 
     try {
       const res = await eventService.updateEvent(id, {
-        title,
-        description,
+        title: title.trim(),
+        description: description.trim(),
         categoryId,
-        startDate: new Date(startDate).toISOString(),
-        venueName,
-        address,
-        city,
-        maxCapacity: parseInt(maxCapacity, 10),
-        isFree,
+        startDate: startDate ? new Date(startDate).toISOString() : undefined,
+        venueName: venueName.trim(),
+        address: address.trim(),
+        city: city.trim(),
+        maxCapacity: parseInt(maxCapacity, 10) || 100,
+        isFree: Boolean(isFree),
         price: isFree ? 0 : parseFloat(price) || 0,
-        posterImage,
+        posterImage: posterImage?.trim() || null,
       });
 
       if (res.success) {
@@ -141,7 +150,7 @@ export const EditEventPage = () => {
             label="Category"
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
-            options={CATEGORIES.map((c) => ({ label: c.name, value: c.id }))}
+            options={categoriesList.map((c) => ({ label: c.name, value: c.id }))}
           />
           <Input
             label="Start Date"
