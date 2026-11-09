@@ -63,3 +63,4 @@ Inspected generated `dist/assets/*.js` files for sensitive keys:
 - Network endpoints dynamically resolve via `import.meta.env.VITE_API_BASE_URL || '/api'`.
 
 **Classification:** **PRODUCTION BUILD CERTIFIED**
+
