@@ -26,7 +26,7 @@ export const EventApprovalPage = () => {
       // Fetch both pending events and all events so admin can toggle view
       const [pendingRes, allRes] = await Promise.all([
         adminService.getPendingEvents().catch(() => ({ data: [] })),
-        eventService.getAllEvents({ limit: 100 }).catch(() => ({ data: [] }))
+        eventService.getEvents({ limit: 100 }).catch(() => ({ data: [] }))
       ]);
 
       const pendingList = pendingRes.data || [];

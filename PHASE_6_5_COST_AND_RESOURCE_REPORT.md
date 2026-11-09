@@ -42,3 +42,4 @@ The EventHub application was benchmarked against the provider plan limits:
 - **Rule 2:** If the user requires dedicated compute, custom domain SSL certificates with SLA guarantees, or multi-region high availability in the future, explicit user approval and billing authorization will be requested before provisioning.
 
 **Classification:** **COST & QUOTA CONTROLS CERTIFIED**
+

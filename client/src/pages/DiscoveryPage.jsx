@@ -48,7 +48,7 @@ export const DiscoveryPage = () => {
       if (isAuthenticated) {
         const favRes = await favoriteService.getFavorites();
         if (favRes.success) {
-          setFavoriteIds(favRes.data.favoriteIds);
+          setFavoriteIds(favRes.data?.favoriteIds || []);
         }
       }
     } catch (err) {

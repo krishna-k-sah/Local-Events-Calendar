@@ -385,5 +385,53 @@ describe('Phase 5.5 – Dedicated PostgreSQL Concurrency & Transaction Integrity
     const evtCheck = await prisma.event.findUnique({ where: { id: rollbackEvent.id } });
     expect(evtCheck.currentRegistered).toBe(0);
   });
+
+  // ==========================================
+  // TEST 7: Concurrent Event Update & Registration
+  // ==========================================
+  it('Test 7: Concurrent Event Update & Registration – Organizer update while registration in-flight maintains invariants', async () => {
+    const concurrentEvt = await prisma.event.create({
+      data: {
+        title: `PG Concurrent Update Event ${Date.now()}`,
+        description: 'Concurrent modification test',
+        startDate: new Date(Date.now() + 86400 * 1000),
+        maxCapacity: 5,
+        currentRegistered: 2,
+        status: 'PUBLISHED',
+        organizerId: organizerUser.id,
+        categoryId,
+        locationId,
+      },
+    });
+
+    const user = await request(app).post('/api/auth/register').send({
+      fullName: 'In-Flight Booker',
+      email: `inflight_${Date.now()}@test.com`,
+      password: 'password123',
+      role: 'ATTENDEE',
+    });
+
+    // Fire simultaneous registration and event details update
+    const [regRes, updateRes] = await Promise.all([
+      request(app)
+        .post(`/api/events/${concurrentEvt.id}/register`)
+        .set('Authorization', `Bearer ${user.body.token}`),
+      request(app)
+        .put(`/api/events/${concurrentEvt.id}`)
+        .set('Authorization', `Bearer ${organizerToken}`)
+        .send({
+          title: `Updated Title ${Date.now()}`,
+          description: 'Updated description during live registration',
+          maxCapacity: 10,
+        }),
+    ]);
+
+    expect([200, 201]).toContain(regRes.status);
+    expect([200, 201]).toContain(updateRes.status);
+
+    const finalEvt = await prisma.event.findUnique({ where: { id: concurrentEvt.id } });
+    expect(finalEvt.currentRegistered).toBe(3);
+    expect(finalEvt.maxCapacity).toBe(10);
+  });
 });
 

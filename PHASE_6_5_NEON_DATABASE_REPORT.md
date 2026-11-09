@@ -89,3 +89,4 @@ Upon migration completion, the production database contains 14 fully indexed rel
 | 14 | `_prisma_migrations`| Prisma migration journal | Primary key `id`; Migration checksums |
 
 **Classification:** **NEON DATABASE PROVISIONING SPECIFICATION CERTIFIED**
+

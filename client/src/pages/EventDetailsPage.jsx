@@ -66,7 +66,7 @@ export const EventDetailsPage = () => {
       if (isAuthenticated) {
         const favRes = await favoriteService.getFavorites();
         if (favRes.success) {
-          setIsFavorited(favRes.data.favoriteIds.includes(id));
+          setIsFavorited((favRes.data?.favoriteIds || []).includes(id));
         }
       }
       await fetchWaitlistStatus();

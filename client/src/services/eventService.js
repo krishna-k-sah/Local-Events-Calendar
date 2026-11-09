@@ -6,6 +6,10 @@ export const eventService = {
     return res.data;
   },
 
+  async getAllEvents(params = {}) {
+    return this.getEvents(params);
+  },
+
   async getCalendarEvents(params = {}) {
     const res = await api.get('/events/calendar', { params });
     return res.data;

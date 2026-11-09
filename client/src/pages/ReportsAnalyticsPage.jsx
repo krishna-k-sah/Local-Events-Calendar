@@ -21,7 +21,7 @@ export const ReportsAnalyticsPage = () => {
         adminService.getDashboardMetrics(),
       ]);
       setDataList(reportRes.data || []);
-      setAnalytics(metricsRes.data?.analytics || null);
+      setAnalytics(metricsRes.data || null);
     } catch (err) {
       setError(err.message || 'Failed to load report data.');
     } finally {

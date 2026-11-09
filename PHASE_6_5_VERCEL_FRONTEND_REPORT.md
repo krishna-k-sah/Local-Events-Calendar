@@ -93,3 +93,4 @@ npx --yes vercel env add VITE_API_BASE_URL production
 ```
 
 **Classification:** **VERCEL FRONTEND SPECIFICATION & 20 VIEWS CERTIFIED**
+

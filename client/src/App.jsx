@@ -47,10 +47,12 @@ export function App() {
     location.pathname.startsWith('/dashboard') ||
     location.pathname.startsWith('/admin') ||
     location.pathname.startsWith('/organizer') ||
+    location.pathname.startsWith('/my-events') ||
     location.pathname.startsWith('/my-registrations') ||
     location.pathname.startsWith('/favorites') ||
     location.pathname.startsWith('/profile') ||
     location.pathname.startsWith('/notifications') ||
+    location.pathname.startsWith('/reports') ||
     location.pathname.startsWith('/settings');
 
   return (
@@ -88,7 +90,9 @@ export function App() {
               {/* Organizer Routes */}
               <Route path="/events/create" element={<CreateEventPage />} />
               <Route path="/events/edit/:id" element={<EditEventPage />} />
+              <Route path="/events/:id/edit" element={<EditEventPage />} />
               <Route path="/organizer/events" element={<MyEventsPage />} />
+              <Route path="/my-events" element={<MyEventsPage />} />
 
               {/* Admin Governance Routes */}
               <Route path="/admin" element={<AdminDashboard />} />
@@ -96,6 +100,7 @@ export function App() {
               <Route path="/admin/approvals" element={<EventApprovalPage />} />
               <Route path="/admin/categories" element={<CategoryManagementPage />} />
               <Route path="/admin/reports" element={<ReportsAnalyticsPage />} />
+              <Route path="/reports" element={<ReportsAnalyticsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
 
               {/* Fallback route */}

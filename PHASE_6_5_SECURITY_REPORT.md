@@ -38,3 +38,4 @@ In accordance with strict compliance rules, this report documents verified techn
 2. **Untested Areas:** Physical infrastructure security at Neon, Railway, and Vercel data centers is managed under the respective providers' SOC 2 Type II compliance frameworks and was not independently audited.
 
 **Classification:** **SECURITY CONTROLS AUDITED & VERIFIED**
+

@@ -28,7 +28,7 @@ export const UserDashboard = () => {
         ]);
 
         if (regRes.success) setRegistrations(regRes.data);
-        if (favRes.success) setFavoritesCount(favRes.data.favoriteIds.length);
+        if (favRes.success) setFavoritesCount(favRes.data?.favoriteIds?.length || 0);
         if (eventsRes.success) setRecommendations(eventsRes.data);
       } catch (err) {
         console.error('Error loading dashboard data:', err);

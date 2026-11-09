@@ -117,3 +117,4 @@ DEPLOYMENT BLOCKED
 ```
 
 *(Rationale: The application codebase, 20 frontend views, Dockerfile, migration scripts, and 125/125 automated tests are completely verified and pre-checked. Direct cloud deployment without GitHub is fully specified and configured. The deployment is paused at the required interactive authorization checkpoint awaiting the user's direct browser OAuth login for Vercel and Railway, and database creation on Neon.)*
+

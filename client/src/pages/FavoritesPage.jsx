@@ -17,7 +17,7 @@ export const FavoritesPage = () => {
     try {
       const res = await favoriteService.getFavorites();
       if (res.success) {
-        setFavoriteEvents(res.data.events);
+        setFavoriteEvents(res.data?.events || []);
       }
     } catch (err) {
       console.error(err);

@@ -55,3 +55,4 @@ Get-Content staging_backup.sql | docker exec -i eventhub-postgres psql -U postgr
 2. **Data Consistency:** Verified that relational foreign keys and composite unique constraints remained fully functional post-restore.
 
 **Classification:** **DISASTER RECOVERY PROCEDURES AUDITED & CERTIFIED**
+
