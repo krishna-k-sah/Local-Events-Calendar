@@ -5,6 +5,9 @@ npm-debug.log
 !.env.example
 dev.db
 dev.db-journal
+*.db
+*.db-journal
+*.sqlite
 uploads/*
 !uploads/.gitkeep
 tests
