@@ -5,7 +5,7 @@ import prisma from '../src/config/db.js';
 import { generateSecureTicketCode } from '../src/utils/ticketGenerator.js';
 import { generateTicketToken } from '../src/controllers/ticketController.js';
 
-describe('Phase 6.6.3.5 – Ticket Security, Entropy, Collision Safety & Authorization Suite', () => {
+describe('Ticket Security, Entropy, Collision Safety & Authorization Suite', () => {
   let organizerToken;
   let organizerUser;
   let attendee1Token;

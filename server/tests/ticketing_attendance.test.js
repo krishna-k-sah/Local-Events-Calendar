@@ -4,7 +4,7 @@ import app from '../src/app.js';
 import prisma from '../src/config/db.js';
 import { generateTicketToken } from '../src/controllers/ticketController.js';
 
-describe('Phase 5 – Advanced Event Management and Intelligence Integration Tests', () => {
+describe('EventHub Ticketing, Digital Passes & Attendance Check-in Suite', () => {
   let adminToken;
   let organizerToken;
   let attendee1Token;

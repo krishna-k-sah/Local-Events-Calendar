@@ -16,7 +16,7 @@ import {
   Copy,
   Check,
 } from 'lucide-react';
-import { ticketService } from '../../services/phase5Service';
+import { ticketService } from '../../services/eventOperationsService';
 
 export const QrTicketModal = ({ ticketCode, isOpen, onClose }) => {
   const [ticketData, setTicketData] = useState(null);

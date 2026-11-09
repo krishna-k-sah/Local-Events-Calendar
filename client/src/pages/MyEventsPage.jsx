@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../components/layout/PageHeader';
 import eventService from '../services/eventService';
-import { analyticsService } from '../services/phase5Service';
+import { analyticsService } from '../services/eventOperationsService';
 import { formatDate, formatCurrency } from '../utils/constants';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';

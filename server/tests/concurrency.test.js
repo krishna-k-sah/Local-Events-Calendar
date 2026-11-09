@@ -4,7 +4,7 @@ import app from '../src/app.js';
 import prisma from '../src/config/db.js';
 import { generateTicketToken } from '../src/controllers/ticketController.js';
 
-describe('Phase 5.5 – Dedicated PostgreSQL Concurrency & Transaction Integrity Suite', () => {
+describe('PostgreSQL Concurrency, Transaction Integrity & Flash Registration Suite', () => {
   let organizerToken;
   let organizerUser;
   let categoryId;

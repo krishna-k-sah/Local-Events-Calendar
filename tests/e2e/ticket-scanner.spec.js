@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Phase 5 – Advanced Intelligence & Event Passes E2E Workflow', () => {
+test.describe('Digital Passes, Ticketing and Attendance Scanner E2E', () => {
   test.beforeEach(async ({ context, page }) => {
     await context.clearCookies();
     await page.goto('/login');

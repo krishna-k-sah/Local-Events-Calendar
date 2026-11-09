@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, Calendar, MapPin, Users, ArrowRight } from 'lucide-react';
-import { recommendationService } from '../../services/phase5Service';
+import { recommendationService } from '../../services/eventOperationsService';
 
 export const RecommendedEvents = ({ title = 'Recommended For You', subtitle = 'AI-driven personalized picks based on your attendance, favorites, and location' }) => {
   const [recommendations, setRecommendations] = useState([]);

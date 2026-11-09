@@ -12,7 +12,7 @@ import {
   RotateCcw,
   ShieldAlert,
 } from 'lucide-react';
-import { attendanceService } from '../../services/phase5Service';
+import { attendanceService } from '../../services/eventOperationsService';
 
 export const AttendanceScannerModal = ({ eventId, eventTitle, isOpen, onClose }) => {
   const [ticketInput, setTicketInput] = useState('');

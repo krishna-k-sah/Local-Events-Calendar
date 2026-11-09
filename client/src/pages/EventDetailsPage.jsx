@@ -19,7 +19,7 @@ import {
 import eventService from '../services/eventService';
 import registrationService from '../services/registrationService';
 import favoriteService from '../services/favoriteService';
-import { waitlistService } from '../services/phase5Service';
+import { waitlistService } from '../services/eventOperationsService';
 import { formatDate, formatTime, formatCurrency } from '../utils/constants';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';

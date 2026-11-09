@@ -16,7 +16,7 @@ import {
 } from '../src/controllers/recommendationController.js';
 import { processEventReminders } from '../src/services/reminderService.js';
 
-describe('Phase 5.1 – Production Correctness, Formula Validation & Security Suite', () => {
+describe('EventHub Personalization, Recommendation Scoring & Notification Suite', () => {
   let adminToken;
   let organizerToken;
   let attendee1Token;

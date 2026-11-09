@@ -270,16 +270,16 @@ npm run build
 ### Test Suite Breakdown
 | Suite Name | Tests | Duration | Description |
 |---|---|---|---|
-| `phase6_6_3_5_ticket_security.test.js` | 8 | ~2.2s | 96-bit CSPRNG, 500-batch uniqueness, collision retry |
-| `phase5_5_postgresql_concurrency.test.js`| 8 | ~3.2s | Flash registration, waitlist ordering, transaction rollbacks |
+| `ticket_security.test.js` | 8 | ~2.2s | 96-bit CSPRNG, 500-batch uniqueness, collision retry |
+| `concurrency.test.js` | 8 | ~3.2s | Flash registration, waitlist ordering, transaction rollbacks |
 | `staging_smoke.test.js` | 12 | ~1.0s | Health probes, JWT auth, event lifecycle, QR passes |
 | `e2e-workflow.test.js` | 20 | ~1.3s | Persona workflows covering all 20 views |
-| `phase5.test.js` | 17 | ~2.0s | QR ticketing, door scanner, CSV stream export |
-| `phase5_3_analytics.test.js` | 6 | ~1.8s | Zero-division safety, capacity, attendance & promotion math |
+| `ticketing_attendance.test.js` | 17 | ~2.0s | QR ticketing, door scanner, CSV stream export |
+| `analytics.test.js` | 6 | ~1.8s | Zero-division safety, capacity, attendance & promotion math |
 | `api.test.js` | 37 | ~2.1s | REST endpoint contracts, validation & auth guards |
 | `load_stress.test.js` | 3 | ~2.5s | High-concurrency race condition simulations |
-| `phase5_3_reminders.test.js` | 5 | ~0.2s | Automated 24h reminder scheduler & idempotency |
-| `phase5_1.test.js` | 13 | ~1.0s | Personalization algorithms & notification badges |
+| `reminders.test.js` | 5 | ~0.2s | Automated 24h reminder scheduler & idempotency |
+| `personalization.test.js` | 13 | ~1.0s | Personalization algorithms & notification badges |
 | **Playwright Chromium E2E** | **5** | **~20.1s** | Live browser navigation, forms, and camera door scanner |
 | **TOTAL** | **134** | **~26.0s** | **100% Pass Rate** |
 
