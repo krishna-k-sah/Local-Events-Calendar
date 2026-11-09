@@ -40,15 +40,37 @@ export const getDashboardMetrics = async (req, res, next) => {
       color: cat.color,
     }));
 
-    // Monthly trends (past 6 months)
-    const monthlyTrends = [
-      { month: 'Jun', events: 24, registrations: 840 },
-      { month: 'Jul', events: 32, registrations: 1120 },
-      { month: 'Aug', events: 38, registrations: 1450 },
-      { month: 'Sep', events: 45, registrations: 1890 },
-      { month: 'Oct', events: 51, registrations: 2210 },
-      { month: 'Nov', events: totalEvents, registrations: totalRegistrations },
-    ];
+    // Calculate genuine monthly trends for the past 6 months from real database records
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const now = new Date();
+    const monthlyTrends = [];
+
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const startOfMonth = new Date(d.getFullYear(), d.getMonth(), 1);
+      const endOfMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0, 23, 59, 59, 999);
+      const monthLabel = monthNames[d.getMonth()];
+
+      const [monthEvents, monthRegs] = await Promise.all([
+        prisma.event.count({
+          where: {
+            createdAt: { gte: startOfMonth, lte: endOfMonth },
+          },
+        }),
+        prisma.registration.count({
+          where: {
+            registeredAt: { gte: startOfMonth, lte: endOfMonth },
+            status: { in: ['CONFIRMED', 'ATTENDED'] },
+          },
+        }),
+      ]);
+
+      monthlyTrends.push({
+        month: monthLabel,
+        events: monthEvents,
+        registrations: monthRegs,
+      });
+    }
 
     res.status(200).json({
       success: true,

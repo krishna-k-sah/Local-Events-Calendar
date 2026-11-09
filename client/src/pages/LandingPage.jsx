@@ -229,15 +229,23 @@ export const LandingPage = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredEvents.map((evt) => (
-              <EventCard
-                key={evt.id}
-                event={evt}
-                isFavorited={favoriteIds.includes(evt.id)}
-                onToggleFavorite={handleToggleFavorite}
-                onRegister={handleRegister}
-              />
-            ))}
+            {featuredEvents.length === 0 ? (
+              <div className="col-span-full py-12 text-center text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl">
+                <Calendar className="w-10 h-10 mx-auto text-slate-400 mb-2" />
+                <p className="font-medium">No featured events currently available.</p>
+                <p className="text-xs text-slate-400 mt-1">Check back soon or explore our full event catalog.</p>
+              </div>
+            ) : (
+              featuredEvents.map((evt) => (
+                <EventCard
+                  key={evt.id}
+                  event={evt}
+                  isFavorited={favoriteIds.includes(evt.id)}
+                  onToggleFavorite={handleToggleFavorite}
+                  onRegister={handleRegister}
+                />
+              ))
+            )}
           </div>
         )}
       </section>
@@ -260,15 +268,23 @@ export const LandingPage = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {upcomingEvents.map((evt) => (
-              <EventCard
-                key={evt.id}
-                event={evt}
-                isFavorited={favoriteIds.includes(evt.id)}
-                onToggleFavorite={handleToggleFavorite}
-                onRegister={handleRegister}
-              />
-            ))}
+            {upcomingEvents.length === 0 ? (
+              <div className="col-span-full py-12 text-center text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl">
+                <Calendar className="w-10 h-10 mx-auto text-slate-400 mb-2" />
+                <p className="font-medium">No upcoming events found.</p>
+                <p className="text-xs text-slate-400 mt-1">Stay tuned for new community experiences.</p>
+              </div>
+            ) : (
+              upcomingEvents.map((evt) => (
+                <EventCard
+                  key={evt.id}
+                  event={evt}
+                  isFavorited={favoriteIds.includes(evt.id)}
+                  onToggleFavorite={handleToggleFavorite}
+                  onRegister={handleRegister}
+                />
+              ))
+            )}
           </div>
         )}
       </section>

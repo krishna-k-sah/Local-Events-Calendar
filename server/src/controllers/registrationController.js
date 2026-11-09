@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import prisma from '../config/db.js';
 
 export const registerForEvent = async (req, res, next) => {
@@ -49,9 +50,9 @@ export const registerForEvent = async (req, res, next) => {
         throw new Error('CAPACITY_FULL');
       }
 
-      // 6. Generate unique ticket code
-      const randDigits = Math.floor(1000 + Math.random() * 9000);
-      const ticketCode = `EVT-${event.id.substring(0, 4).toUpperCase()}-${randDigits}`;
+      // 6. Generate cryptographically unique ticket code
+      const randSuffix = crypto.randomBytes(4).toString('hex').toUpperCase();
+      const ticketCode = `EVT-${event.id.substring(0, 4).toUpperCase()}-${randSuffix}`;
 
       // 7. Upsert registration
       let registration;
@@ -225,8 +226,8 @@ export const cancelRegistration = async (req, res, next) => {
 
       if (nextWaitlist) {
         // Promote waitlist entry to confirmed registration
-        const randDigits = Math.floor(1000 + Math.random() * 9000);
-        const ticketCode = `EVT-${registration.event.id.substring(0, 4).toUpperCase()}-${randDigits}`;
+        const randSuffix = crypto.randomBytes(4).toString('hex').toUpperCase();
+        const ticketCode = `EVT-${registration.event.id.substring(0, 4).toUpperCase()}-${randSuffix}`;
 
         const prevReg = await tx.registration.findUnique({
           where: { userId_eventId: { userId: nextWaitlist.userId, eventId } },
