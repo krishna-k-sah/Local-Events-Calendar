@@ -1,7 +1,16 @@
+import crypto from 'crypto';
+
 /**
  * EventHub Production Environment Variable Validator
  * Validates configuration at startup and fails fast if critical secrets or settings are missing.
  */
+
+// Cryptographic one-way SHA-256 fingerprints of prohibited/compromised secrets
+// (Never store plaintext secrets in source code)
+const BLACKLISTED_SECRET_HASHES = new Set([
+  '4b685235e2be9859d015ffb58fddc5a6f6ef8d7feda55c4eb34149e89f4c27af', // Default development secret
+  'f82c904b98f84ee9d07ebb91fbb97809aafe6206fad93febb05dc2dd36c8ddf0', // Compromised Phase 6.6.3 sample secret
+]);
 
 export function validateEnvironment() {
   const env = process.env.NODE_ENV || 'development';
@@ -15,17 +24,15 @@ export function validateEnvironment() {
 
   // 2. Strict checks for production and staging
   if (env === 'production' || env === 'staging') {
-    const COMPROMISED_SECRETS = [
-      'eventhub-super-secret-jwt-key-2026-production',
-      'c489ab71e82d338f90bb353cfc87f5812fa9084920612ce2e56d78d9101f3014c44a2b6f',
-    ];
-    
     if (!process.env.JWT_SECRET) {
       errors.push('JWT_SECRET must be defined in production/staging environments.');
-    } else if (COMPROMISED_SECRETS.includes(process.env.JWT_SECRET)) {
-      errors.push('JWT_SECRET cannot use a default, sample, or compromised secret in production/staging.');
-    } else if (process.env.JWT_SECRET.length < 32) {
-      errors.push('JWT_SECRET must be at least 32 characters long for cryptographic security.');
+    } else {
+      const secretHash = crypto.createHash('sha256').update(process.env.JWT_SECRET).digest('hex');
+      if (BLACKLISTED_SECRET_HASHES.has(secretHash)) {
+        errors.push('JWT_SECRET matches a known compromised or default development secret fingerprint.');
+      } else if (process.env.JWT_SECRET.length < 32) {
+        errors.push('JWT_SECRET must be at least 32 characters long for cryptographic security.');
+      }
     }
 
     if (!process.env.CLIENT_URL) {
