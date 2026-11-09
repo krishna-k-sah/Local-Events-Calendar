@@ -75,8 +75,8 @@ describe('Phase 6.6.3.5 – Ticket Security, Entropy, Collision Safety & Authori
     expect(regRes.body.success).toBe(true);
     const code = regRes.body.data.ticketCode;
     expect(code).toBeDefined();
-    // Validate format: EVT- followed by three 6-hex blocks (18 hex characters = 96 bits entropy)
-    expect(code).toMatch(/^EVT-[0-9A-F]{6}-[0-9A-F]{6}-[0-9A-F]{6}$/);
+    // Validate format: EVT- followed by four 6-hex blocks (24 hex characters = 96 bits entropy)
+    expect(code).toMatch(/^EVT-[0-9A-F]{6}-[0-9A-F]{6}-[0-9A-F]{6}-[0-9A-F]{6}$/);
 
     // Verify database record has valid status and matches code
     const dbReg = await prisma.registration.findUnique({
@@ -122,7 +122,7 @@ describe('Phase 6.6.3.5 – Ticket Security, Entropy, Collision Safety & Authori
     };
 
     const code = await generateSecureTicketCode(mockTx, 5);
-    expect(code).toMatch(/^EVT-[0-9A-F]{6}-[0-9A-F]{6}-[0-9A-F]{6}$/);
+    expect(code).toMatch(/^EVT-[0-9A-F]{6}-[0-9A-F]{6}-[0-9A-F]{6}-[0-9A-F]{6}$/);
     expect(callCount).toBe(2); // Confirms retry was triggered on collision
   });
 
