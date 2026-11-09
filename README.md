@@ -27,6 +27,21 @@ Built with **React 18, Vite, Tailwind CSS, Node.js (Express), and Prisma ORM on 
 
 ---
 
+## 📸 Application Showcase
+
+<div align="center">
+  <h3>Public Event Discovery & Multi-Filter Search</h3>
+  <img src="docs/images/discovery-preview.png" alt="Event Discovery & Multi-Filter Search" width="850" />
+  <br/><br/>
+  <h3>Interactive Community Calendar View</h3>
+  <img src="docs/images/calendar-preview.png" alt="Interactive Community Calendar View" width="850" />
+  <br/><br/>
+  <h3>Landing Page & Featured Events</h3>
+  <img src="docs/images/landing-preview.png" alt="Landing Page Showcase" width="850" />
+</div>
+
+---
+
 ## ✨ Key Features
 
 ### 🎟️ 1. Cryptographic QR Ticketing & Digital Passes
