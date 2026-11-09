@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import prisma from '../config/db.js';
+import { generateSecureTicketCode } from '../utils/ticketGenerator.js';
 
 export const registerForEvent = async (req, res, next) => {
   try {
@@ -50,9 +51,8 @@ export const registerForEvent = async (req, res, next) => {
         throw new Error('CAPACITY_FULL');
       }
 
-      // 6. Generate cryptographically unique ticket code
-      const randSuffix = crypto.randomBytes(4).toString('hex').toUpperCase();
-      const ticketCode = `EVT-${event.id.substring(0, 4).toUpperCase()}-${randSuffix}`;
+      // 6. Generate cryptographically secure ticket code with collision protection
+      const ticketCode = await generateSecureTicketCode(tx);
 
       // 7. Upsert registration
       let registration;
@@ -61,6 +61,7 @@ export const registerForEvent = async (req, res, next) => {
           where: { id: existingRegistration.id },
           data: {
             status: 'CONFIRMED',
+            ticketStatus: 'VALID',
             ticketCode,
             registeredAt: new Date(),
             cancelledAt: null,
@@ -73,6 +74,7 @@ export const registerForEvent = async (req, res, next) => {
             userId,
             ticketCode,
             status: 'CONFIRMED',
+            ticketStatus: 'VALID',
           },
         });
       }
@@ -225,9 +227,8 @@ export const cancelRegistration = async (req, res, next) => {
       });
 
       if (nextWaitlist) {
-        // Promote waitlist entry to confirmed registration
-        const randSuffix = crypto.randomBytes(4).toString('hex').toUpperCase();
-        const ticketCode = `EVT-${registration.event.id.substring(0, 4).toUpperCase()}-${randSuffix}`;
+        // Promote waitlist entry to confirmed registration with collision-free ticket code
+        const ticketCode = await generateSecureTicketCode(tx);
 
         const prevReg = await tx.registration.findUnique({
           where: { userId_eventId: { userId: nextWaitlist.userId, eventId } },

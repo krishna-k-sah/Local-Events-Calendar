@@ -89,7 +89,7 @@ export const scanTicket = async (req, res, next) => {
       });
     }
 
-    if (registration.status === 'CANCELLED') {
+    if (registration.status === 'CANCELLED' || registration.ticketStatus === 'CANCELLED') {
       return res.status(400).json({
         success: false,
         message: 'This registration was cancelled and is no longer valid.',
@@ -97,7 +97,7 @@ export const scanTicket = async (req, res, next) => {
     }
 
     // 4. Duplicate Check-in Prevention (Pre-transaction check)
-    if (registration.attendance || registration.status === 'ATTENDED') {
+    if (registration.attendance || registration.status === 'ATTENDED' || registration.ticketStatus === 'USED') {
       const priorScan = registration.attendance;
       const priorTime = priorScan?.scannedAt
         ? new Date(priorScan.scannedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
@@ -124,7 +124,7 @@ export const scanTicket = async (req, res, next) => {
         where: { id: registration.id },
       });
 
-      if (!liveReg || liveReg.status === 'ATTENDED') {
+      if (!liveReg || liveReg.status === 'ATTENDED' || liveReg.ticketStatus === 'USED') {
         throw new Error('DUPLICATE_CHECKIN_DETECTED');
       }
 
