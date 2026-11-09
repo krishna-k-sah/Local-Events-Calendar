@@ -11,6 +11,7 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 RUN npm ci
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" DIRECT_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 RUN npx prisma generate --schema=prisma/schema.postgresql.prisma
 
 # Final production runner
@@ -38,7 +39,7 @@ USER appuser
 EXPOSE 5000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:5000/health || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:${PORT:-5000}/health || exit 1
 
 CMD ["node", "src/server.js"]
 
